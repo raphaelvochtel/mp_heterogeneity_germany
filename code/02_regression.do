@@ -47,7 +47,8 @@ restore
 
 /////
 
-foreach i in 6 12 18 24 30 36 {
+// 12 18 24 30 36 
+foreach i in 6 {
 	sort county_id year_month
 		
 	qui reghdfe Delta_log_${ind}_F`i' c.mp_25bp_${sign}##i.county_id Delta_log_${ind}_L*, absorb(county_id year_month) vce(cluster land)
@@ -70,8 +71,6 @@ foreach i in 6 12 18 24 30 36 {
 	keep if regexm(v1, "county_id#c.mp_25bp_${sign}")
 	destring v2, replace ignore(* ( ) )
 	gen t_stat_`i' = v2[_n+1]
-
-	local i 
 	
 	drop if ind == 0
 	drop ind
@@ -87,7 +86,8 @@ foreach i in 6 12 18 24 30 36 {
 	drop v2
 	order county_id name exakt_pc_`i' t_stat_`i'
 
-	save "${out_path}/${ind}/${sign}/hm`i'.dta", replace
+    save "${out_path}/${ind}/${sign}/hm`i'.dta", replace
+	erase "${out_path}/${ind}/${sign}/hm`i'.csv"
 	
 	restore
 }
@@ -96,9 +96,11 @@ foreach i in 6 12 18 24 30 36 {
 /////
 
 use "${out_path}/${ind}/${sign}/hm6.dta", clear
+erase "${out_path}/${ind}/${sign}/hm6.dta"
 
-foreach i in 6 12 18 24 30 36 {
+foreach i in 12 18 24 30 36 {
 	merge 1:1 county_id using "${out_path}/${ind}/${sign}/hm`i'.dta"
+	erase "${out_path}/${ind}/${sign}/hm`i'.dta"
 	drop _merge
 }
 
