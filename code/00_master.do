@@ -17,6 +17,8 @@ cd ${orig}
 // packages
 // ssc install reghdfe
 // ssc install ftools
+// ssc install shp2dta
+// ssc install spmap
 
 set seed 123456789
 

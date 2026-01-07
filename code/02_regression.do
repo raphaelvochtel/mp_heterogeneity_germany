@@ -1,9 +1,9 @@
 clear
 
 ****
-global ind unemp_rate 	// unemp_rate unemployed
-global sign all 		// all expan contr
 
+global ind unemployed 	// unemp_rate unemployed
+global sign expan 		// all expan contr
 
 ****
 
@@ -47,8 +47,7 @@ restore
 
 /////
 
-// 12 18 24 30 36 
-foreach i in 6 {
+foreach i in 6 12 18 24 30 36 {
 	sort county_id year_month
 		
 	qui reghdfe Delta_log_${ind}_F`i' c.mp_25bp_${sign}##i.county_id Delta_log_${ind}_L*, absorb(county_id year_month) vce(cluster land)
@@ -91,6 +90,7 @@ foreach i in 6 {
 	
 	restore
 }
+erase "${out_path}/dict.dta"
 
 
 /////
@@ -105,22 +105,3 @@ foreach i in 12 18 24 30 36 {
 }
 
 save "${out_path}/${ind}/${sign}/collected_results.dta", replace
-
-
-// forvalues i = 1/36 {
-// 	gen abs_t_stat_`i'_UE = abs(t_stat_`i'_UE)
-// 	preserve
-// 	collapse (mean) mean = abs_t_stat_`i'_UE (semean) SE_mean = abs_t_stat_`i'_UE
-// 	gen h = `i'
-// 	save "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stats_summary`i'.dta", replace
-// 	restore
-// }
-//
-// use "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stats_summary1.dta", clear
-// erase "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stats_summary1.dta"
-// forvalues i = 2/36 {
-// 	append using "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stats_summary`i'.dta"
-// 	erase "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stats_summary`i'.dta"
-// }
-//
-// save "results\results_of_heterogeneity_unemployment_kreis\sign_$sign\t_stat_hm.dta", replace

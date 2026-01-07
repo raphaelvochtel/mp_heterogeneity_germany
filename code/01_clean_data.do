@@ -35,6 +35,13 @@ save `mp_shocks'
 import excel "${src_path}/Unemployed_Counties_1998_2024.xlsx", sheet("Auswertung") cellrange(A13:MN412) clear
 
 gen name = substr(A, 7, .)
+
+preserve
+gen ags = substr(A, 1, 5)
+keep name ags
+save "${out_path}/ags_dict.dta", replace
+restore
+
 egen group = group(name)
 tostring group, gen(groupstr)
 encode groupstr, gen(county_id)
