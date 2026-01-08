@@ -34,7 +34,7 @@ foreach i in 6 12 18 24 30 36 {
         legend(size(small)) ///
         title("rel. transm. to agg. (horizon: `i' months)")
 	
-	graph export "${out_path}/${ind}/${sign}/h`i'.png", replace width(2000)
+	graph export "${out_path}/${ind}/${sign}/h`i'.png", replace width(600)
 		
     drop value
 }

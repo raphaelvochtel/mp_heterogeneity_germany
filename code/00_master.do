@@ -24,10 +24,10 @@ cd ${orig}
 // ssc install spmap
 
 *** which analysis to conduct ***
-global ind unemployed 	// options: 	unemp_rate 	unemployed		(later: prices)
-global sign expan 		// options: 	all			expan 			contr
+global ind unemp_rate 	// options: 	unemp_rate 	unemployed		(later: prices)
+global sign contr 		// options: 	all			expan 			contr
 
 *** do-files ***
 // include ${dofiles}/01_clean_data.do
 // include ${dofiles}/02_regression.do
-// include ${dofiles}/03_analysis.do
+include ${dofiles}/03_analysis.do
