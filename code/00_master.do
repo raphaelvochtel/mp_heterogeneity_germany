@@ -1,11 +1,14 @@
 clear all
 
 set graph off
+set seed 123456789
 
+
+*** paths ***
 local user = c(username)
 
 if "`user'" == "raphaelvochtel"{
-	global orig /Users/raphaelvochtel/Documents/mp_heterogeneity_germany
+	global orig /Users/raphaelvochtel/Documents/mp_heterogeneity_germany // CHANGE HERE
 	
 	global dofiles $orig/code
 	global src_path $orig/input_data
@@ -14,13 +17,17 @@ if "`user'" == "raphaelvochtel"{
 
 cd ${orig}
 
-// packages
+*** packages ***
 // ssc install reghdfe
 // ssc install ftools
 // ssc install shp2dta
 // ssc install spmap
 
-set seed 123456789
+*** which analysis to conduct ***
+global ind unemployed 	// options: 	unemp_rate 	unemployed		(later: prices)
+global sign expan 		// options: 	all			expan 			contr
 
-// *** do-files ***
-
+*** do-files ***
+// include ${dofiles}/01_clean_data.do
+// include ${dofiles}/02_regression.do
+// include ${dofiles}/03_analysis.do

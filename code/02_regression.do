@@ -1,12 +1,5 @@
 clear
 
-****
-
-global ind unemployed 	// unemp_rate unemployed
-global sign expan 		// all expan contr
-
-****
-
 use "${out_path}/raw_panel.dta", clear
 
 sort county_id year_month
@@ -90,8 +83,6 @@ foreach i in 6 12 18 24 30 36 {
 	
 	restore
 }
-erase "${out_path}/dict.dta"
-
 
 /////
 
@@ -105,3 +96,6 @@ foreach i in 12 18 24 30 36 {
 }
 
 save "${out_path}/${ind}/${sign}/collected_results.dta", replace
+
+erase "${out_path}/raw_panel.dta"
+erase "${out_path}/dict.dta"
